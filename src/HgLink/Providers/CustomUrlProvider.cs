@@ -1,6 +1,5 @@
 ﻿namespace HgLink.Providers
 {
-    using GitTools.Git;
     using System.Text.RegularExpressions;
 
     public sealed class CustomUrlProvider : ProviderBase
@@ -11,12 +10,12 @@
 
         private string _rawUrl;
 
-        public CustomUrlProvider()
-            : base(new GitPreparer())
-        {
-        }
+        //public CustomUrlProvider()
+        //    : base(new GitPreparer())
+        //{
+        //}
 
-        public override string RawGitUrl
+        public override string RawHgUrl
         {
             get
             {

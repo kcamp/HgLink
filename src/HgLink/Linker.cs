@@ -200,7 +200,7 @@ namespace HgLink
                     }
                 }
 
-				var rawUrl = context.Provider.RawGitUrl;
+				var rawUrl = context.Provider.RawHgUrl;
 
                 if(!rawUrl.Contains("%var2%") && !rawUrl.Contains("{0}"))
                 { 

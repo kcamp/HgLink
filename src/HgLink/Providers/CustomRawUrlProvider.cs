@@ -2,7 +2,6 @@
 {
     using System;
     using System.Text.RegularExpressions;
-    using GitTools.Git;
 
     public sealed class CustomRawUrlProvider : ProviderBase
     {
@@ -10,12 +9,12 @@
 
         private string _rawUrl;
 
-        public CustomRawUrlProvider()
-            : base(new GitPreparer())
-        {
-        }
+        //public CustomRawUrlProvider()
+        //    : base(new GitPreparer())
+        //{
+        //}
 
-        public override string RawGitUrl
+        public override string RawHgUrl
         {
             get
             {

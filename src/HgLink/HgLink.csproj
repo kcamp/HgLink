@@ -58,14 +58,8 @@
       <HintPath>..\..\lib\Catel.Fody.2.11.0\lib\portable-net4+sl4+wp7+win8+wpa81+MonoAndroid14+MonoTouch40\Catel.Fody.Attributes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GitTools.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\GitTools.Core.1.0.0-unstable0021\lib\net45\GitTools.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LibGit2Sharp, Version=0.21.0.176, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll</HintPath>
+    <Reference Include="Mercurial.Net">
+      <HintPath>..\..\lib\Mercurial.Net.1.1.1.607\lib\net35-Client\Mercurial.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Build" />
@@ -93,6 +87,9 @@
     <Compile Include="Extensions\ProjectItemExtensions.cs" />
     <Compile Include="Exceptions\HgLinkException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helpers\HgDirFinder.cs" />
+    <Compile Include="Helpers\RepositoryLoader.cs" />
+    <Compile Include="Helpers\TemporaryFilesContext.cs" />
     <Compile Include="Helpers\PdbStrHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
@@ -113,7 +110,6 @@
     <Compile Include="Providers\BitBucketProvider.cs" />
     <Compile Include="Providers\CustomRawUrlProvider.cs" />
     <Compile Include="Providers\CustomUrlProvider.cs" />
-    <Compile Include="Providers\GitHubProvider.cs" />
     <Compile Include="Providers\Interfaces\IProviderManager.cs" />
     <Compile Include="Providers\Interfaces\IProvider.cs" />
     <Compile Include="Providers\ProviderBase.cs" />

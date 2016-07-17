@@ -66,7 +66,7 @@
                 var provider = new CustomRawUrlProvider();
                 provider.Initialize("http://example.com/repo");
 
-                Assert.AreEqual("http://example.com/repo", provider.RawGitUrl);
+                Assert.AreEqual("http://example.com/repo", provider.RawHgUrl);
             }
 
             [TestCase]
@@ -75,7 +75,7 @@
                 var provider = new CustomRawUrlProvider();
                 provider.Initialize("http://example.com/repo/");
 
-                Assert.AreEqual("http://example.com/repo", provider.RawGitUrl);
+                Assert.AreEqual("http://example.com/repo", provider.RawHgUrl);
             }
         }
     }

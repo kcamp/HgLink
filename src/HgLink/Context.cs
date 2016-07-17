@@ -12,10 +12,9 @@ namespace HgLink
     using Catel;
     using Catel.IO;
     using Catel.Logging;
-    using GitTools;
     using Providers;
-
-    public class Context : RepositoryContext
+    
+    public class Context
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
@@ -46,13 +45,8 @@ namespace HgLink
         public bool SkipVerify { get; set; }
 
         public string LogFile { get; set; }
-
-        //[Obsolete("Use 'Directory' instead")]
-        public string SolutionDirectory
-        {
-            get { return Directory; }
-            set { Directory = value; }
-        }
+        
+        public string SolutionDirectory { get; set; }
 
         public string ConfigurationName { get; set; }
 
@@ -77,19 +71,9 @@ namespace HgLink
             }
         }
 
-        //[Obsolete("Use 'Url' instead")]
-        public string TargetUrl
-        {
-            get { return Url; }
-            set { Url = value; }
-        }
+        public string TargetUrl { get; set; }
 
-        //[Obsolete("Use 'Branch' instead")]
-        public string TargetBranch
-        {
-            get { return Branch; }
-            set { Branch = value; }
-        }
+        public string TargetBranch { get; set; }
 
         public string ShaHash { get; set; }
 

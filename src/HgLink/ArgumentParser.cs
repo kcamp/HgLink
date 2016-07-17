@@ -10,11 +10,9 @@ namespace HgLink
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Catel.Collections;
     using Catel.Logging;
-    using GitTools;
     using GitTools.Git;
-    using LibGit2Sharp;
+    using Mercurial;
     using Providers;
 
     public static class ArgumentParser
@@ -159,34 +157,32 @@ namespace HgLink
             {
                 Log.Info("No target url was specified, trying to determine the target url automatically");
 
-                var gitDir = GitDirFinder.TreeWalkForGitDir(context.SolutionDirectory);
+                var gitDir = HgDirFinder.TreeWalkForDotHgDir(context.SolutionDirectory);
                 if (gitDir != null)
                 {
-                    using (var repo = RepositoryLoader.GetRepo(gitDir))
+                    var repo = RepositoryLoader.GetRepo(gitDir);
+                    var tip = repo.Tip(); 
+                    
+                    if (string.IsNullOrEmpty(context.ShaHash))
                     {
-                        var currentBranch = repo.Head;
-
-                        if (string.IsNullOrEmpty(context.ShaHash))
-                        {
-                            context.ShaHash = currentBranch.Tip.Sha;
-                        }
-
-                        if (currentBranch.Remote == null || currentBranch.IsDetachedHead())
-                        {
-                            currentBranch = repo.GetBranchesContainingCommit(context.ShaHash).FirstOrDefault(b => b.Remote != null);
-                        }
-
-                        if (currentBranch != null && currentBranch.Remote != null)
-                        {
-                            var url = currentBranch.Remote.Url;
-                            if (url.StartsWith("https://"))
-                            {
-                                context.TargetUrl = url.OptimizeUrl();
-
-                                Log.Info("Automatically determine target url '{0}'", context.TargetUrl);
-                            }
-                        }
+                        context.ShaHash = tip.Hash;
                     }
+                    
+                    //if (currentBranch.Remote == null || currentBranch.IsDetachedHead())
+                    //{
+                    //    currentBranch = repo.GetBranchesContainingCommit(context.ShaHash).FirstOrDefault(b => b.Remote != null);
+                    //}
+
+                    //if (currentBranch != null && currentBranch.Remote != null)
+                    //{
+                    //    var url = currentBranch.Remote.Url;
+                    //    if (url.StartsWith("https://"))
+                    //    {
+                    //        context.TargetUrl = url.OptimizeUrl();
+
+                    //        Log.Info("Automatically determine target url '{0}'", context.TargetUrl);
+                    //    }
+                    //}
                 }
             }
 

@@ -7,27 +7,24 @@
 
 namespace HgLink.Providers
 {
-    using System;
-    using System.IO;
     using System.Linq;
     using Catel;
     using Catel.Logging;
     using GitTools;
-    using GitTools.Git;
-    using LibGit2Sharp;
+    using Mercurial;
 
     public abstract class ProviderBase : IProvider
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        private readonly IRepositoryPreparer _repositoryPreparer;
+        //private readonly IRepositoryPreparer _repositoryPreparer;
 
-        protected ProviderBase(IRepositoryPreparer repositoryPreparer)
-        {
-            Argument.IsNotNull(() => repositoryPreparer);
+        //protected ProviderBase(IRepositoryPreparer repositoryPreparer)
+        //{
+        //    Argument.IsNotNull(() => repositoryPreparer);
 
-            _repositoryPreparer = repositoryPreparer;
-        }
+        //    _repositoryPreparer = repositoryPreparer;
+        //}
 
         /// <summary>
         /// Gets or sets the name of the company.
@@ -57,7 +54,7 @@ namespace HgLink.Providers
         /// Gets the raw git URL.
         /// </summary>
         /// <value>The raw git URL.</value>
-        public abstract string RawGitUrl { get; }
+        public abstract string RawHgUrl { get; }
 
         public abstract bool Initialize(string url);
 
@@ -68,33 +65,32 @@ namespace HgLink.Providers
             string commitSha = null;
             var repositoryDirectory = context.SolutionDirectory;
 
-            if (_repositoryPreparer.IsPreparationRequired(context))
-            {
-                Log.Info("No local repository is found in '{0}', creating a temporary one", repositoryDirectory);
+            //if (_repositoryPreparer.IsPreparationRequired(context))
+            //{
+            //    Log.Info("No local repository is found in '{0}', creating a temporary one", repositoryDirectory);
 
-                repositoryDirectory = _repositoryPreparer.Prepare(context, temporaryFilesContext);
+            //    repositoryDirectory = _repositoryPreparer.Prepare(context, temporaryFilesContext);
+            //}
+
+            var repository = new Repository(repositoryDirectory);
+
+            if (string.IsNullOrEmpty(context.ShaHash))
+            {
+                Log.Info("No sha hash is available on the context, retrieving latest commit of current branch");
+
+                var lastCommit = repository.Tip();
+                commitSha = lastCommit.Hash;
             }
-
-            using (var repository = new Repository(repositoryDirectory))
+            else
             {
-                if (string.IsNullOrEmpty(context.ShaHash))
+                Log.Info("Checking if commit with sha hash '{0}' exists on the repository", context.ShaHash);
+                var commit = repository.Log(new RevSpec(context.ShaHash)).FirstOrDefault();
+                if (commit != null)
                 {
-                    Log.Info("No sha hash is available on the context, retrieving latest commit of current branch");
-
-                    var lastCommit = repository.Commits.First();
-                    commitSha = lastCommit.Sha;
-                }
-                else
-                {
-                    Log.Info("Checking if commit with sha hash '{0}' exists on the repository", context.ShaHash);
-
-                    var commit = repository.Commits.FirstOrDefault(c => string.Equals(c.Sha, context.ShaHash, StringComparison.OrdinalIgnoreCase));
-                    if (commit != null)
-                    {
-                        commitSha = commit.Sha;
-                    }
+                    commitSha = commit.Hash;
                 }
             }
+
 
             if (commitSha == null)
             {

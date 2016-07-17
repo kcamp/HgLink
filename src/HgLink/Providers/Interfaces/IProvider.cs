@@ -39,7 +39,7 @@ namespace HgLink.Providers
         /// Gets the raw git URL.
         /// </summary>
         /// <value>The raw git URL.</value>
-        string RawGitUrl { get; }
+        string RawHgUrl { get; }
 
         bool Initialize(string url);
 

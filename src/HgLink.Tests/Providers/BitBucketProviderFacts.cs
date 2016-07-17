@@ -87,7 +87,7 @@ namespace HgLink.Tests.Providers
                     var provider = new BitBucketProvider();
                     provider.Initialize("https://bitbucket.org/CatenaLogic/GitLink");
 
-                    Assert.AreEqual("https://bitbucket.org/CatenaLogic/GitLink/raw", provider.RawGitUrl);
+                    Assert.AreEqual("https://bitbucket.org/CatenaLogic/GitLink/raw", provider.RawHgUrl);
                 }
             }
         }

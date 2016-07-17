@@ -3,7 +3,6 @@
   <Costura>
     <IncludeAssemblies>
       Catel.Core
-      GitTools.Core
     </IncludeAssemblies>
   </Costura>
   <Catel/>

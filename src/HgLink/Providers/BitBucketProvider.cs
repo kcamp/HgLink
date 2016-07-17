@@ -9,18 +9,17 @@ namespace HgLink.Providers
 {
     using System;
     using System.Text.RegularExpressions;
-    using GitTools.Git;
 
     public class BitBucketProvider : ProviderBase
     {
         private readonly Regex _gitHubRegex = new Regex(@"(?<url>(?<companyurl>(?:https://)?bitbucket\.org/(?<company>[^/]+))/(?<project>[^/]+))");
 
-        public BitBucketProvider() 
-            : base(new GitPreparer())
-        {
-        }
+        //public BitBucketProvider() 
+        //    : base(new GitPreparer())
+        //{
+        //}
 
-        public override string RawGitUrl
+        public override string RawHgUrl
         {
             get { return String.Format("https://bitbucket.org/{0}/{1}/raw", CompanyName, ProjectName); }
         }

@@ -75,7 +75,7 @@
                 string correctReturnedUrl = correctUrl.Replace("{filename}", "%var2%");
                 correctReturnedUrl = correctReturnedUrl.Replace("{revision}", "{0}");
 
-                Assert.AreEqual(correctReturnedUrl, provider.RawGitUrl);
+                Assert.AreEqual(correctReturnedUrl, provider.RawHgUrl);
             }
         }
     }
